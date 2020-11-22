@@ -24,6 +24,7 @@ def main():
     parser.add_argument('-v', '--validate', metavar='file/to/validate')
     parser.add_argument('-e', '--export', metavar='file name')
     parser.add_argument('-S', '--serve', action='store_true')
+    parser.add_argument('-l', '--language', metavar='language code', default='en')
 
     cwd = os.getcwd()
     args = parser.parse_args()
@@ -40,9 +41,9 @@ def main():
             print(f'The path to the errors on the json is (there could be more):')
             print(f'Error: {result}')
     elif args.export:
-        resume_json.export(cwd, args.resume, args.export, args.theme, args.format)
+        resume_json.export(cwd, args.resume, args.export, args.theme, args.format, args.language)
     elif args.serve:
-        resume_json.serve(cwd, args.resume, args.theme)
+        resume_json.serve(cwd, args.resume, args.language)
 
 
 if __name__ == '__main__':

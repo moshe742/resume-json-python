@@ -30,14 +30,14 @@ class ResumeJson:
         return validate.validate(file_validate, schema)
 
     def export(self, file_path, json_name='resume', file_name='resume',
-               theme='even', kind='html'):
+               theme='even', kind='html', language='en'):
         export = ResumeExport()
 
         if kind == 'html':
-            export.export_html(file_path, json_name, file_name, theme)
+            export.export_html(file_path, json_name, file_name, theme, language)
         elif kind == 'pdf':
-            export.export_pdf(file_path, json_name, file_name, theme)
+            export.export_pdf(file_path, json_name, file_name, theme, language)
 
-    def serve(self, json_file_path, json_file, theme):
+    def serve(self, json_file_path, json_file, language='en'):
         server = ResumeServe()
-        server.serve(json_file_path, json_file, theme)
+        server.serve(json_file_path, json_file, language)

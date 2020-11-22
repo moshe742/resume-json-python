@@ -55,10 +55,10 @@ class TemplateGenerator:
 
         return value
 
-    def create_html(self, file_path, file_name, theme_name):
+    def create_html(self, file_path, file_name, theme_name, language='en'):
         self.theme = self.theme_name[theme_name]
         template = self.env.get_template(f'{self.theme}.html')
         file_path_and_name = os.path.join(file_path, file_name)
         with open(file_path_and_name) as f:
             resume_dict = json.load(f)
-        return template.render(resume=resume_dict)
+        return template.render(resume=resume_dict, lang=language)
