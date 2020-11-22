@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ resume.basics.name }}</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Montserrat;
+            font-size: 1em;
+            color: #333333;
+        }
+
+        .picture {
+            border-radius: 3%;
+            margin: 20px;
+            width: 100px;
+            height: 100px;
+        }
+
+        a {
+            color: #333333;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #4e4e4e;
+        }
+
+        a:hover {
+            color: #4e4e4e;
+            text-decoration: underline;
+        }
+
+        header {
+            text-align: center;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 0.2em;
+        }
+
+        h2 {
+            font-size: 1.7em;
+            margin-top: 2em;
+            margin-bottom: 0.2em;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        h4 {
+            color: #4e4e4e;
+            font-size: 1.1em;
+            margin-top: 0;
+        }
+
+        .profile {
+            font-family: Montserrat;
+            white-space: nowrap;
+            margin: 0.5em;
+        }
+
+        .contact-header {
+            font-weight: bold;
+            color: #4e4e4e;
+            margin: 1em;
+        }
+
+        .contact-header .fa {
+            font-size: 1.5em;
+        }
+
+        .profile .fa {
+            font-size: 1.5em;
+        }
+
+        .label {
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+
+        .fa {
+            font-size: 2em;
+        }
+
+        .left {
+            font-size: 1em;
+        }
+
+        .main {
+            margin: 0 10% 50px 10%;
+        }
+
+        .skills {
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-family: 'Open Sans';
+        }
+
+        li {
+            font-family: 'Open Sans';
+        }
+
+        .keywords {
+            background-color: #333333;
+            color: #fff;
+            padding: 6px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        blockquote {
+            margin: 2em 10px;
+            padding: 1em 10px;
+            border-left: 10px solid #edf0f5;
+            font-family: 'Open Sans';
+            font-size: 1.5em;
+        }
+
+        blockquote .name {
+            font-weight: bold;
+            font-family: "Montserrat";
+        }
+
+        .responsive-show {
+            display: none;
+        }
+
+        .address {
+            display: block
+        }
+
+        section.skills {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media screen and (max-width: 1000px) {
+            header {
+                font-size: 1.66em;
+            }
+
+            h2 {
+                font-size: 3em;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            p {
+                font-size: 1.2em;
+            }
+
+            li {
+                font-size: 1.2em;
+            }
+
+            blockquote {
+                font-size: 1.2em;
+            }
+
+            h2 {
+                font-size: 2.3em;
+            }
+
+            .responsive-hidden {
+                display: none;
+                visibility: hidden;
+            }
+
+            .responsive-show {
+                display: inline;
+                visibility: visible;
+            }
+        }
+
+        @media print {
+
+            body {
+                font-size: 0.6em;
+            }
+
+            .address {
+                display: inline-block
+            }
+
+            .profile {
+                font-size: 1em;
+                display: inline-block
+            }
+
+            #profiles .contact-header {
+                display: none;
+            }
+
+            #languages,
+            #interests {
+                display: none;
+            }
+
+            section.skills section {
+                margin-right: 10em
+            }
+
+            .skills {
+                page-break-inside: avoid;
+            }
+
+            .main {
+                padding: 10px;
+                margin-left: 2%;
+                margin-right: 2%;
+            }
+
+            section:not(#work) {
+                page-break-inside: avoid;
+            }
+
+            .job {
+                page-break-inside: avoid;
+            }
+
+            @page {
+                size: auto;   /* auto is the initial value */
+                /* this affects the margin in the printer settings */
+                margin: 25mm 10mm;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+</head>
+<body>
+<header>
+    <h1>{{resume.basics.name}}</h1>
+    <h3 class="label">{{resume.basics.label}}</h3>
+
+    {% if resume.basics.picture %}
+    <img src="{{ resume.basics.image }}" alt="{{ resume.basics.name }}'s image" class="picture">
+    {% endif %}
+
+    <div id="contact">
+			<span class="contact-header">
+				<a href="https://maps.google.com/?q={{resume.basics.location.city}}, {{resume.basics.location.region}}, {{resume.basics.location.countryCode}}"><i
+                        title="ADDRESS" class="fa fa-map-marker left"></i>&nbsp;{% if resume.basics.location.address %} {{resume.basics.location.address}}, {% endif %}{{resume.basics.location.city}}, {{resume.basics.location.region}}, {{resume.basics.location.countryCode}}</a>
+			</span>
+        <br/><br/>
+        {% if resume.basics.email %}
+        <span class="contact-header">
+				<a href="mailto:{{resume.basics.email}}" target="_blank"><i title="EMAIL"
+                                                                            class="fa fa-envelope left"></i>&nbsp;{{resume.basics.email}}</a>
+			</span>
+        <br/><br/>
+        {% endif %}
+        {% if resume.basics.phone %}
+        <span class="contact-header">
+				<a href="tel:{{resume.basics.phone}}" target="_blank"><i title="PHONE"
+                                                                         class="fa fa-phone-square left"></i>&nbsp;{{resume.basics.phone}}</a>
+			</span>
+        <br/><br/>
+        {% endif %}
+        {% if resume.basics.website %}
+        <span class="contact-header">
+				<a href="{{ resume.basics.website }}" target="_blank"><i title="WEBSITE" class="fa fa-globe left"></i>&nbsp;{{ resume.basics.website }}</a>
+			</span>
+        <br><br>
+        {% endif %}
+    </div>
+    <br>
+    <div id="profiles">
+        {% for profile in resume.basics.profiles %}
+        <span class="profile"><a href="{{ profile.url }}" target="_blank" class="profile"><i
+                class="fa fa-{{ profile.network|lower }} left"></i>&nbsp;{{ profile.username }}</a></span>
+        {% endfor %}
+    </div>
+</header>
+<div class="main">
+    <section id="about">
+        <h2><i class="fa fa-user left"></i> ABOUT</h2>
+        <p>
+            {{ resume.basics.summary }}
+        </p>
+    </section>
+    {% if resume.work %}
+    <section id="work">
+        <h2><i class="fa fa-suitcase left"></i> WORK EXPERIENCE</h2>
+        {% for job in resume.work %}
+        <div class="job">
+            <h3>{{ job.position }}, {{ job.company }}</h3>
+            <h4>{{ job.startDate|datetime_format }} {% if job.endDate %}
+                <span class="endDate">
+				- {{ job.endDate|datetime_format }}
+			</span>
+                {% else %}
+                <span class="endDate">
+				- Present
+			</span>
+                {% endif %}</h4>
+            <p>{{ job.summary }}</p>
+            {% if job.highlights %}
+            <h4>HIGHLIGHTS</h4>
+            <ul class="highlights">
+                {% for highlight in job.highlights %}
+                <li>{{ highlight }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+    {% if resume.skills %}
+    <section id="skills">
+        <h2><i class="fa fa-tasks left"></i> SKILLS</h2>
+        <section class="skills">
+            {% for skill in resume.skills %}
+            <section>
+                <h3 class="skills">{{ skill.name }}</h3>
+                {% if skill.keywords %}
+                {% for keyword in skill.keywords %}
+                <span class="keywords">{{ keyword }}</span>
+                {% endfor %}
+                {% endif %}
+            </section>
+            {% endfor %}
+        </section>
+    </section>
+    {% endif %}
+    {% if resume.education %}
+    <section id="education">
+        <h2><i class="fa fa-graduation-cap left"></i> EDUCATION</h2>
+        {% for education in resume.education %}
+        <h3>{{ education.studyType }}, {{ education.area }} - {{ education.institution }}</h3>
+        <h4>{{ education.startDate|datetime_format }} {% if education.endDate %} - {{ education.endDate|datetime_format
+            }} {% else %} - Present {% endif %} {% if education.gpa %}<br> GPA: {{ education.gpa }} {% endif %}
+        </h4>
+        {% if education.courses %}
+        <h4>COURSES</h4>
+        <ul class="courses">
+            {% for course in education.courses %}
+            <li>{{ course }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endfor %}
+    </section>
+    {% endif %}
+    {% if resume.awards %}
+    <section id="awards">
+        <h2><i class="fa fa-trophy left"></i> AWARDS</h2>
+        {% for award in resume.awards %}
+        <h3>{{ award.title }} - {{ award.awarder }}</h3>
+        {% if award.date %}
+        <h4>
+            {{ award.date|datetime_format }}
+        </h4>
+        {% endif %}
+        <p>{{ award.summary }}</p>
+        {% endfor %}
+    </section>
+    {% endif %}
+    {% if resume.publications %}
+    <section id="publications">
+        <h2><i class="fa fa-book left"></i> PUBLICATIONS</h2>
+        {% for publication in resume.publications %}
+        <h3>{{ publication.name }}</h3>
+        <h4>{{ publication.releaseDate }}</h4>
+        <p>{{ publication.summary }}<br><a href="{{ publication.website }}" target="_blank">{{ publication.website
+            }}</a></p>
+
+        {% endfor %}
+    </section>
+    {% endif %}
+    {% if resume.volunteer %}
+    <section id="volunteer">
+        <h2><i class="fa fa-child left"></i> VOLUNTEER WORK</h2>
+        {% for volunteering in resume.volunteer %}
+        <h3>{{ volunteering.position }}, {{ volunteering.organization }}</h3>
+        <h4>{{ volunteering.startDate|datetime_format }}
+            {% if volunteering.endDate %}
+            <span class="endDate">
+					- {{ volunteering.endDate|datetime_format }}
+			</span>
+            {% else %}
+            <span class="endDate">
+					- Present
+			</span>
+            {% endif %}
+        </h4>
+        <p>{{ volunteering.summary }}<br><a href="{{ volunteering.website }}" target="_blank">{{ volunteering.website
+            }}</a></p>
+        {% if volunteering.highlights %}
+        <h4>HIGHLIGHTS</h4>
+        <ul class="highlights">
+            {% for highlight in volunteering.highlights %}
+            <li>{{ highlight }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endfor %}
+    </section>
+    {% endif %}
+    {% if resume.languages %}
+    <section id="languages">
+        <h2><i class="fa fa-language left"></i> LANGUAGES</h2>
+
+        {% for language in resume.languages %}
+        <h3>{{ language.language }}</h3>
+        <h4>Fluency: {{ language.fluency }}</h4>
+        {% endfor %}
+    </section>
+    {% endif %}
+    {% if resume.interests %}
+    <section id="interests">
+        <h2><i class="fa fa-star left"></i> INTERESTS</h2>
+        {% for interest in resume.interests %}
+        <h3 class="skills">{{ interest.name }}</h3>
+        {% if interest.keywords %} {% for keyword in interest.keywords %}
+        <span class="keywords">{{ keyword }}</span> {% endfor %} {% endif %} {% endfor %}
+    </section>
+    {% endif %}
+    {% if resume.references %}
+    <section id="references">
+        <h2><i class="fa fa-thumbs-up left"></i> REFERENCES</h2>
+        {% for reference in resume.references %}
+        <blockquote>
+            {{ reference.reference }}
+            <div class="name"><br>- {{ reference.name }}</div>
+        </blockquote>
+        <br>
+        {% endfor %}
+    </section>
+    {% endif %}
+</div>
+</body>
+</html>

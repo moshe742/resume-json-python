@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="{{ lang }}">
+	<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimal-ui">
+
+	<title>moshe nahmias</title>
+
+	<style>
+	body {
+	background: #fff;
+	font: 16px 'Open Sans', Helvetica, Arial, sans-serif;
+	line-height: 1.4;
+	margin: 0 0 100px 0;
+}
+em {
+	color: #999;
+}
+p {
+	line-height: 1.6;
+	font-size: 90%;
+}
+
+a {
+	color: #2C85B1;
+	text-decoration: none;
+	font-weight: 400;
+}
+ul {
+	margin-bottom: 0;
+}
+section {
+	margin: 1em 0 2em;
+}
+blockquote {
+	margin: 0 0 1em 0;
+}
+#resume {
+	margin: 2em 2em 2em 2.5em;
+	max-width: 760px;
+}
+
+/* Resume heading */
+.heading header {
+
+}
+
+.heading header h1 {
+	font-size: 180%;
+	margin: 0.5em 0;
+	font-weight: 600;
+}
+
+.heading header h2 {
+	font-size: 140%;
+	margin: 0;
+	font-weight: 400;
+}
+
+.heading header .contact .detail {
+	margin: 0 1em 0 0;
+}
+
+.profile {
+	display: inline-block;
+	margin: 0 1em 0 0;
+}
+
+.profile strong,
+.profile span {
+	display: inline-block;
+	margin: 0 1em 0 0;
+}
+/* section / line breaks */
+section h2 {
+	font-size: 140%;
+	margin: 0 0 1em;
+	text-transform: uppercase;
+	color: #BC1B39;
+	font-weight: 400;
+}
+
+/* Experience items */
+.item {
+	margin: 0 0 1em;
+	padding: 0 0 1em;
+	border-bottom: 1px solid #F2EBEC;
+}
+
+.item:last-child {
+	border-bottom: none;
+}
+
+
+.item header h3 {
+	margin: 0.2em 1em 0.2em 0;
+	display: inline-block;
+	font-weight: 600;
+}
+
+.item header a {
+	display: inline-block;
+}
+
+.item .position {
+	font-weight: 600;
+	font-size: 100%;
+	margin: 0.2em 1em 0.2em 0;
+}
+
+.item .startDate,
+.item .endDate {
+	color: #6B6B6B;
+}
+
+.item .highlights {
+	list-style: square;
+	font-size: 90%;
+}
+
+/* skills */
+#skills .item {
+	margin: 0.5em 0;
+	padding: 0 0 0.5em;
+	font-size: 90%;
+}
+
+#skills .item .name {
+	font-weight: 600;
+	display: inline-block;
+	text-transform: uppercase;
+	margin: 0 1em 0 0;
+	width: 23%;
+	vertical-align: top;
+}
+
+#skills .item .keywords {
+	display: inline-block;
+	width: 70%;
+	vertical-align: top;
+}
+
+/* education */
+#education .item {
+	display: inline-block;
+	vertical-align: top;
+	width: 49.5%;
+	border-bottom: 0;
+}
+	</style>
+	<style media="print">
+		body { font-size: 12px; }
+	</style>
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+
+	</head>
+	<body>
+
+	<div id="resume">
+
+	<section class="heading">
+		<header>
+			<h1>{{ resume.basics.name }}</h1>
+			<div class="contact">
+				<span class="detail">
+					<a href="mailto:{{ resume.basics.email }}">{{ resume.basics.email }}</a>
+				</span>
+				<span class="detail">
+					{{ resume.basics.phone }}
+				</span>
+			</div>
+		</header>
+
+
+		<p><p>{{ resume.basics.summary }}</p></p>
+
+		{% for profile in resume.basics.profiles %}
+			<div class="profile">
+				<strong class="network">
+					{{ profile.network|capitalize }}
+				</strong>
+				<span class="username">
+					{% if profile.url %}
+					<a href="{{ profile.url }}">{{ profile.username}}</a>
+					{% else %}
+					{{ profile.username }}
+					{% endif %}
+				</span>
+			</div>
+		{% endfor %}
+	</section>
+
+	<section id="skills">
+		<h2>Skills</h2>
+		{% for skill in resume.skills %}
+		<div class="item">
+			<div class="name">
+				{{ skill.name }}
+			</div>
+			<div class="keywords">
+				{{ skill.keywords|join(', ') }}
+			</div>
+		</div>
+		{% endfor %}
+	</section>
+
+	<section class="experience">
+		<h2>Experience</h2>
+		{% for job in resume.work %}
+		<section class="item">
+			<header>
+<!--				{{ job.name }}-->
+			</header>
+			<span class="position">
+				{{ job.position }}
+			</span>
+
+			<span class="startDate">
+				{{ job.startDate|datetime_format }}
+			</span>
+			<span class="endDate">
+				- {{ job.endDate|datetime_format }}
+			</span>
+
+			<div class="summary">
+				<p><p>{{ job.summary }}</p></p>
+			</div>
+			<ul class="highlights">
+				{% for highlight in job.highlights %}
+				<li>{{ highlight }}</li>
+				{% endfor %}
+			</ul>
+		</section>
+		{% endfor %}
+	</section>
+
+	<section class="experience">
+		<h2>Volunteering</h2>
+		{% for volunteer in resume.volunteer %}
+		<div class="item">
+			<header>
+					<h3 class="name">{{ volunteer.organization }}</h3>
+			</header>
+			<span class="position">
+				{{ volunteer.position }}
+			</span>
+
+			<span class="startDate">
+				{{ volunteer.startDate|datetime_format }}
+			</span>
+			<span class="endDate">
+				- {{ volunteer.endDate|datetime_format }}
+			</span>
+
+			<div class="summary">
+				<p>{{ volunteer.summary }}</p>
+			</div>
+			<ul class="highlights">
+				{% for highlight in volunteer.highlights %}
+				<li>{{ highlight }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endfor %}
+	</section>
+
+	<section id="education">
+		<h2>Education</h2>
+		{% for school in resume.education %}
+		<div class="item">
+			<header>
+					<h3 class="name">{{ school.institution }}</h3>
+			</header>
+
+			<div class="dates">
+				<span class="startDate">
+					{{ school.startDate|datetime_format }}
+				</span>
+				<span class="endDate">
+					- {{ school.endDate|datetime_format }}
+				</span>
+			</div>
+
+			<div class="qualification">
+				<span class="studyType">
+					{{ school.studyType }}
+				</span>
+
+				<span class="area">
+					- {{ school.area }}
+				</span>
+
+				<span class="gpa">
+					GPA: {{ school.gpa }}
+				</span>
+			</div>
+
+		</div>
+		{% endfor %}
+	</section>
+
+	<section id="awards">
+		<h2>Awards</h2>
+		{% for award in resume.awards %}
+		<div class="item">
+			<div class="title">
+				{{ award.title }}
+			</div>
+			<div class="date">
+				{{ award.date }}
+			</div>
+			<div class="awarder">
+				{{ award.awarder }}
+			</div>
+			<div class="summary">
+				<p>{{ award.summary }}</p>
+			</div>
+		</div>
+		{% endfor %}
+	</section>
+
+	<section id="publications">
+		<h2>Publications</h2>
+		{% for pub in resume.publications %}
+		<div class="item">
+			<div class="name">
+				{{ pub.name }}
+			</div>
+			<div class="publisher">
+				{{ pub.publisher }}
+			</div>
+			<div class="releaseDate">
+				{{ pub.releaseDate }}
+			</div>
+			<div class="summary">
+				<p>{{ pub.summary }}</p>
+			</div>
+		</div>
+		{% endfor %}
+	</section>
+
+	<section id="languages">
+		<h2>Languages</h2>
+		{% for lang in resume.languages %}
+		<div class="item">
+			<div class="language">
+				{{ lang.language }}
+			</div>
+			<div class="fluency">
+				<em>{{ lang.fluency }}</em>
+			</div>
+		</div>
+		{% endfor %}
+	</section>
+
+	<section id="interests">
+		<h2>Interests</h2>
+		{% for interest in resume.interests %}
+		<div class="item">
+			<div class="name">
+				{{ interest.name }}
+			</div>
+			<ul class="keywords">
+				{% for keyword in interest.keywords %}
+				<li>{{ keyword }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endfor %}
+	</section>
+
+	<section id="references">
+		<h2>References</h2>
+		{% for reference in resume.references %}
+		<div class="item">
+			<blockquote class="reference">
+				{{ reference.reference }}
+			</blockquote>
+			<div class="name">
+				— {{ reference.name }}
+			</div>
+		</div>
+		{% endfor %}
+	</section>
+
+	</div>
+
+	</body>
+</html>
