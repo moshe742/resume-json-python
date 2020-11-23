@@ -288,8 +288,8 @@ section {
           <div class="spaced-list">
             <h4>{{ item.name }}</h4>
             <span>
-              <time datetime="{{ item.startDate }}">{{ item.startDate|datetimeformat }}</time> –
-              {% if item.endDate %}<time datetime="{{ item.endDate}}">{{ item.endDate|datetimeformat }}</time>{% else %}Present{% endif %}
+              <time datetime="{{ item.startDate }}">{{ item.startDate|datetime_format }}</time> –
+              {% if item.endDate %}<time datetime="{{ item.endDate}}">{{ item.endDate|datetime_format }}</time>{% else %}Present{% endif %}
             </span>
           </div>
           <div class="spaced-list">
@@ -319,8 +319,8 @@ section {
           <div class="spaced-list">
             <h4>{{ item.organization }}</h4>
             <span>
-              <time datetime="{{ item.startDate }}">{{ item.startDate|datetimeformat }}</time> –
-              {% if item.endDate %}<time datetime="{{ item.endDate }}">{{ item.endDate|datetimeformat }}</time>{% else %}Present{% endif %}
+              <time datetime="{{ item.startDate }}">{{ item.startDate|datetime_format }}</time> –
+              {% if item.endDate %}<time datetime="{{ item.endDate }}">{{ item.endDate|datetime_format }}</time>{% else %}Present{% endif %}
             </span>
           </div>
           <div class="spaced-list">
@@ -350,8 +350,8 @@ section {
           <div class="spaced-list">
             <h4>{{ item.institution }}</h4>
             <span>
-              <time datetime="{{ item.startDate }}">{{ item.startDate|datetimeformat }}</time> –
-              {% if item.endDate %}<time datetime="{{ item.endDate }}">{{ item.endDate|datetimeformat }}</time>{% else %}Present{% endif %}
+              <time datetime="{{ item.startDate }}">{{ item.startDate|datetime_format }}</time> –
+              {% if item.endDate %}<time datetime="{{ item.endDate }}">{{ item.endDate|datetime_format }}</time>{% else %}Present{% endif %}
             </span>
           </div>
           <div class="spaced-list">
@@ -381,8 +381,8 @@ section {
           <div class="spaced-list">
             <h4>{{ item.name }}</h4>
             <span>
-              <time datetime="{{ item.startDate }}">{{ item.startDate|datetimeformat }}</time> –
-              {% if item.endDate %}<time datetime="{{ item.endDate }}">{{ item.endDate|datetimeformat }}</time>{% else %}Present{% endif %}
+              <time datetime="{{ item.startDate }}">{{ item.startDate|datetime_format }}</time> –
+              {% if item.endDate %}<time datetime="{{ item.endDate }}">{{ item.endDate|datetime_format }}</time>{% else %}Present{% endif %}
             </span>
           </div>
           <div class="spaced-list">
