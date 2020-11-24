@@ -28,7 +28,6 @@ class TemplateGenerator:
         return date_value.strftime('%d %B %Y')
 
     def get_year_from_date(self, value):
-        print('hello world')
         try:
             date_value = dt.strptime(value, '%Y-%m-%d')
             return date_value.year
