@@ -20,16 +20,27 @@ class TemplateGenerator:
         }
         self.theme = None
         self.env.filters['datetime_format'] = self.datetime_format
-        self.env.filters['get_year'] = self.get_year
+        self.env.filters['get_year'] = self.get_year_from_date
         self.env.filters['get_full_date'] = self.get_full_date
 
     def get_full_date(self, value):
         date_value = dt.strptime(value, '%Y-%m-%d')
         return date_value.strftime('%d %B %Y')
 
-    def get_year(self, value):
-        date_value = dt.strptime(value, '%Y-%m-%d')
-        return date_value.year
+    def get_year_from_date(self, value):
+        print('hello world')
+        try:
+            date_value = dt.strptime(value, '%Y-%m-%d')
+            return date_value.year
+        except ValueError:
+            pass
+
+        try:
+            date_value = dt.strptime(value, '%Y-%m')
+            return date_value.year
+        except ValueError:
+            pass
+        return value
 
     def datetime_format(self, value):
         date_time_format = {
