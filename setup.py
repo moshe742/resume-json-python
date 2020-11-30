@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 setup(
     maintainer='moshe nahmias',
     maintainer_email='moshegrey@gmail.com',
-    name='resume-cli-python',
+    name='resume-json-cli',
     version='0.1.0',
     packages=find_packages(),
     description='',
