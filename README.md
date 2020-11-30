@@ -19,7 +19,7 @@ You will be prompted with the command line from inside the docker.
 ### installing from pip
 Just run the following command
 
-    $ pip install resume-cli
+    $ pip install resume-json-cli
 ### usage
 I assume you use docker for the explanations below, adjust as needed if you
 installed via pip.
