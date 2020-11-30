@@ -14,10 +14,11 @@ Once You can use docker run this command to build
 And then
 
     $ docker run -it image_name bash
-You will be prompted with the command line from inside the docker.
+You will be prompted with the command line from inside the docker and you can go from
+here to usage and start using resume-cli.
 
 ### installing from pip
-Just run the following command
+If you prefer to install it on your local machine just run the following command
 
     $ pip install resume-json-cli
 ### usage
