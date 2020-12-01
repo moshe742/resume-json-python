@@ -8,14 +8,14 @@ def get_license():
         return f.read()
 
 
-def get_description():
-    with open('README.md') as f:
-        return f.read()
+def get_long_description():
+    with open('README.md') as fh:
+        return fh.read()
+
 
 LICENSE = get_license()
 
-long_description = get_description()
-
+long_description = get_long_description()
 
 setup(
     maintainer='moshe nahmias',
@@ -26,7 +26,7 @@ setup(
     description='A project to work with resume json',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='',
+    url='https://github.com/moshe742/resume-json-python',
     license=LICENSE,
     include_package_data=True,
     python_requires='>=3.6',
