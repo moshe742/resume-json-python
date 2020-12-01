@@ -5,7 +5,7 @@ setup(
     maintainer='moshe nahmias',
     maintainer_email='moshegrey@gmail.com',
     name='resume-json-cli',
-    version='0.1.0',
+    version='0.1.2',
     packages=find_packages(),
     description='',
     long_description='',
@@ -17,7 +17,8 @@ setup(
     # project_urls={'bug_tracker': '', 'documentation': ''}
     entry_points={
         'console_scripts': [
-            'resume-cli=resume_json.resume_cli:main',
+            'resume_cli=resume_json.resume_cli:main',
         ]
-    }
+    },
+    install_requires=['Jinja2', 'jsonschema', 'requests', 'WeasyPrint', 'cherrypy']
 )
