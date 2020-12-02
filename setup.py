@@ -18,7 +18,7 @@ LICENSE = get_license()
 long_description = get_long_description()
 
 setup(
-    maintainer='moshe nahmias',
+    maintainer='Moshe Nahmias',
     maintainer_email='moshegrey@gmail.com',
     name='resume-json-cli',
     version=VERSION,

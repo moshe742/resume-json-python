@@ -6,7 +6,7 @@ feature requests.
 ## installation and usage
 
 ### using docker
-You can use docker to run this script for all it's glory.
+You can use docker to run this script for all its glory.
 
 Once You can use docker run this command to build
 
