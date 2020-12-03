@@ -1,7 +1,7 @@
 # resume-json-python
 This project is to be able to work with [json resume](https://jsonresume.org/),
-I implemented here all their features as far as I know, so please file bugs and
-feature requests.
+As far as I can tell, all its features have been implemented here.
+Please file bugs and feature requests as you find them or think of them :).
 
 ## installation and usage
 
