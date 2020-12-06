@@ -11,7 +11,6 @@ class ServeJson:
         self.json_file = json_file
         self.template = TemplateGenerator()
         self.language = language
-        super().__init__()
 
     @cherrypy.expose
     def index(self, theme='even'):
