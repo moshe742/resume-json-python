@@ -13,7 +13,7 @@ class ServeJson:
         self.language = language
 
     @cherrypy.expose
-    def index(self, theme='even'):
+    def index(self, theme: str = 'even') -> str:
         html = self.template.create_html(self.json_path, self.json_file, theme, self.language)
         return html
 
@@ -22,5 +22,5 @@ class ResumeServe:
     def __init__(self):
         pass
 
-    def serve(self, json_path, json_file, language='en'):
+    def serve(self, json_path: str, json_file: str, language: str = 'en') -> None:
         cherrypy.quickstart(ServeJson(json_path, json_file, language))

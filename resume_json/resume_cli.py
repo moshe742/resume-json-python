@@ -2,11 +2,12 @@
 
 import argparse
 import os
+import typing
 
 from resume_json.json_resume import ResumeJson
 
 
-def main():
+def parsing_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('-V', '--version')
     parser.add_argument('-t', '--theme', metavar='theme name', type=str,
@@ -26,7 +27,11 @@ def main():
     parser.add_argument('-S', '--serve', action='store_true')
     parser.add_argument('-l', '--language', metavar='language code', default='en')
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def main():
+    args = parsing_arguments()
     file_path = args.dir
     resume_json = ResumeJson()
     if args.init:

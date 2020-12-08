@@ -1,4 +1,7 @@
-def get_location():
+import typing
+
+
+def get_location() -> typing.Tuple:
     country = input('country code: ')
     region = input('region: ')
     city = input('city: ')
@@ -7,7 +10,7 @@ def get_location():
     return country, region, city, address, postal_code
 
 
-def get_basics():
+def get_basics() -> typing.Tuple:
     full_name = input('full name: ')
     email = input('email: ')
     phone = input('phone: ')
@@ -18,24 +21,24 @@ def get_basics():
     return full_name, profession, image, email, phone, url, summary
 
 
-def add_item(item):
+def add_item(item) -> bool:
     res = input(f'want to add {item}? [no] ').lower()
     return res == 'y' or res == 'yes'
 
 
-def add_another(item):
+def add_another(item: str) -> bool:
     res = input(f'want to add another {item} [no]? ').lower()
     return res == 'y' or res == 'yes'
 
 
-def get_profile():
+def get_profile() -> typing.Tuple:
     network = input('network: ')
     username = input('username: ')
     url = input('url: ')
     return network, username, url
 
 
-def get_position():
+def get_position() -> typing.Dict:
     company_name = input('company name: ')
     location = input('location: ')
     company_description = input('company description: ')
@@ -56,7 +59,7 @@ def get_position():
     }
 
 
-def get_volunteering():
+def get_volunteering() -> typing.Dict:
     organization = input('volunteering organization: ')
     position = input('volunteering position: ')
     url = input('volunteering organization url: ')
@@ -73,7 +76,7 @@ def get_volunteering():
     }
 
 
-def add_list_of_items(kind):
+def add_list_of_items(kind: str) -> typing.List[str]:
     items = []
     while add_item(kind):
         item = input(f'{kind}: ')
@@ -81,7 +84,7 @@ def add_list_of_items(kind):
     return items
 
 
-def get_education_info():
+def get_education_info() -> typing.Dict:
     institution = input('institution: ')
     url = input('institution url: ')
     area = input('study subject: ')
@@ -100,7 +103,7 @@ def get_education_info():
     }
 
 
-def get_award():
+def get_award() -> typing.Dict:
     title = input('award title: ')
     award_date = input('date [YYYY-mm-dd]: ')
     awarder = input('awarder: ')
@@ -113,7 +116,7 @@ def get_award():
     }
 
 
-def get_publication():
+def get_publication() -> typing.Dict:
     name = input('publication name: ')
     publisher = input('publisher: ')
     release_date = input('release date: ')
@@ -128,7 +131,7 @@ def get_publication():
     }
 
 
-def get_skill():
+def get_skill() -> typing.Dict:
     name = input('skill name: ')
     level = input('level: ')
     return {
@@ -137,7 +140,7 @@ def get_skill():
     }
 
 
-def get_language():
+def get_language() -> typing.Dict:
     language = input('language name: ')
     fluency = input('fluency: ')
     return {
@@ -146,17 +149,17 @@ def get_language():
     }
 
 
-def get_interest():
+def get_interest() -> str:
     return input('interest name: ')
 
 
-def get_reference():
+def get_reference() -> typing.Tuple:
     name = input('name: ')
     reference = input('reference: ')
     return name, reference
 
 
-def get_project():
+def get_project() -> typing.Dict:
     project_name = input('project name: ')
     desciption = input('description: ')
     start_date = input('start date [YYYY-mm-dd]: ')

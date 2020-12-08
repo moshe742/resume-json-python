@@ -1,11 +1,12 @@
 import json
+import typing
 
 
 class ResumeCreate:
     def __init__(self, ui):
         self.ui = ui
 
-    def get_profiles(self):
+    def get_profiles(self) -> typing.List[typing.Dict]:
         profiles = []
 
         while self.ui.add_another('social network account'):
@@ -19,7 +20,7 @@ class ResumeCreate:
 
         return profiles
 
-    def get_position(self):
+    def get_position(self) -> typing.Dict:
         position = self.ui.get_position()
 
         return {
@@ -33,7 +34,7 @@ class ResumeCreate:
             'summary': position['summary'],
         }
 
-    def get_work_history(self):
+    def get_work_history(self) -> typing.List[typing.Dict]:
         work_history = []
 
         position = self.get_position()
@@ -46,12 +47,14 @@ class ResumeCreate:
             work_history.append(position)
         return work_history
 
-    def get_volunteering_history(self):
+    def get_volunteering_history(self) -> typing.List[typing.Dict]:
         volunteering_history = []
+
         if self.ui.add_item('volunteering'):
             volunteer = self.ui.get_volunteering()
             volunteer['highlights'] = self.ui.add_list_of_items('highlight')
             volunteering_history.append(volunteer)
+
             while self.ui.add_another('volunteering'):
                 volunteer = self.ui.get_volunteering()
                 highlights = self.ui.add_list_of_items('highlight')
@@ -64,9 +67,10 @@ class ResumeCreate:
                     'summary': volunteer['summary'],
                     'highlights': highlights
                 })
+
         return volunteering_history
 
-    def get_education_info(self):
+    def get_education_info(self) -> typing.List[typing.Dict]:
         education_info = []
 
         while self.ui.add_item('education'):
@@ -88,7 +92,7 @@ class ResumeCreate:
 
         return education_info
 
-    def get_awards(self):
+    def get_awards(self) -> typing.List[typing.Dict]:
         awards = []
 
         while self.ui.add_item('award'):
@@ -102,7 +106,7 @@ class ResumeCreate:
 
         return awards
 
-    def get_publications(self):
+    def get_publications(self) -> typing.List[typing.Dict]:
         publications = []
 
         while self.ui.add_item('publication'):
@@ -117,7 +121,7 @@ class ResumeCreate:
 
         return publications
 
-    def get_skills(self):
+    def get_skills(self) -> typing.List[typing.Dict]:
         skills = []
 
         while self.ui.add_item('skill'):
@@ -131,7 +135,7 @@ class ResumeCreate:
 
         return skills
 
-    def get_languages(self):
+    def get_languages(self) -> typing.List[typing.Dict]:
         languages = []
 
         while self.ui.add_item('language'):
@@ -143,7 +147,7 @@ class ResumeCreate:
 
         return languages
 
-    def get_interests(self):
+    def get_interests(self) -> typing.List[typing.Dict]:
         interests = []
 
         while self.ui.add_item('interest'):
@@ -156,7 +160,7 @@ class ResumeCreate:
 
         return interests
 
-    def get_references(self):
+    def get_references(self) -> typing.List[typing.Dict]:
         references = []
 
         while self.ui.add_item('reference'):
@@ -168,8 +172,9 @@ class ResumeCreate:
 
         return references
 
-    def get_projects(self):
+    def get_projects(self) -> typing.List[typing.Dict]:
         projects = []
+
         while self.ui.add_item('project'):
             project = self.ui.get_project()
 
@@ -192,7 +197,8 @@ class ResumeCreate:
 
         return projects
 
-    def create(self, file_path, file_name='resume.json'):
+    def create(self, file_path: str, file_name: str = 'resume.json') -> None:
+        # gathering all the data for the json file
         country, region, city, address, postal_code = self.ui.get_location()
         full_name, profession, image, email, phone, url, summary = self.ui.get_basics()
         profiles = self.get_profiles()
@@ -207,6 +213,7 @@ class ResumeCreate:
         references = self.get_references()
         projects = self.get_projects()
 
+        # setting the data into template
         template = {
             "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
             "basics": {
@@ -242,5 +249,7 @@ class ResumeCreate:
                 "lastModified": "2017-12-24T15:53:00"
             }
         }
+
+        # creating the file
         with open(f'{file_path}/{file_name}', 'w') as f:
             json.dump(template, f, indent=4)

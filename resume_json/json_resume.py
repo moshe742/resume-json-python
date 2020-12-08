@@ -14,11 +14,11 @@ class ResumeJson:
         if ui is None:
             self.ui = basic_tui
 
-    def create(self, file_path, file_name='resume.json'):
+    def create(self, file_path: str, file_name: str = 'resume.json') -> None:
         resume_json = ResumeCreate(self.ui)
         resume_json.create(file_path, file_name)
 
-    def validate(self, file_to_validate, schema=None):
+    def validate(self, file_to_validate: str, schema: str = None) -> str:
         with open(file_to_validate) as f:
             file_validate = json.load(f)
 
@@ -29,8 +29,8 @@ class ResumeJson:
         validate = ResumeValidate()
         return validate.validate(file_validate, schema)
 
-    def export(self, file_path, json_name='resume', file_name='resume',
-               theme='even', kind='html', language='en'):
+    def export(self, file_path: str, json_name: str = 'resume', file_name: str = 'resume',
+               theme: str = 'even', kind: str = 'html', language: str = 'en') -> None:
         export = ResumeExport()
 
         if kind == 'html':
@@ -38,6 +38,6 @@ class ResumeJson:
         elif kind == 'pdf':
             export.export_pdf(file_path, json_name, file_name, theme, language)
 
-    def serve(self, json_file_path, json_file, language='en'):
+    def serve(self, json_file_path: str, json_file: str, language: str = 'en') -> None:
         server = ResumeServe()
         server.serve(json_file_path, json_file, language)
