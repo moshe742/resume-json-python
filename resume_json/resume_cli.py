@@ -2,12 +2,11 @@
 
 import argparse
 import os
-import typing
 
 from resume_json.json_resume import ResumeJson
 
 
-def parsing_arguments():
+def parsing_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument('-V', '--version')
     parser.add_argument('-t', '--theme', metavar='theme name', type=str,
