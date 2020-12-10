@@ -3,24 +3,53 @@ import typing
 
 
 class ResumeCreate:
+    """
+    The class to create the json resume.
+
+    This class is the place to keep the creation of the json resume in one place. Here
+    it will create all the data structures from the input of the user and build the
+    final json, including saving the file to the user location of choice
+    """
     def __init__(self, ui):
         self.ui = ui
 
+    def get_location(self) -> typing.Dict:
+        """
+        Adaptor method to create the location data as needed with the input data.
+        :return:
+        """
+        location = self.ui.get_location()
+        return {
+            'country': location['country'],
+            'region': location['region'],
+            'city': location['city'],
+            'address': location['address'],
+            'postal_code': location['postal_code'],
+        }
+
     def get_profiles(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to create the profiles data as needed with the input data.
+        :return:
+        """
         profiles = []
 
         while self.ui.add_another('social network account'):
-            network, username, url = self.ui.get_profile()
+            profile = self.ui.get_profile()
 
             profiles.append({
-                'network': network,
-                'username': username,
-                'url': url,
+                'network': profile['network'],
+                'username': profile['username'],
+                'url': profile['url'],
             })
 
         return profiles
 
     def get_position(self) -> typing.Dict:
+        """
+        Adaptor method to get the position information from the user input.
+        :return:
+        """
         position = self.ui.get_position()
 
         return {
@@ -35,6 +64,10 @@ class ResumeCreate:
         }
 
     def get_work_history(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the work history from the user input.
+        :return:
+        """
         work_history = []
 
         position = self.get_position()
@@ -48,6 +81,10 @@ class ResumeCreate:
         return work_history
 
     def get_volunteering_history(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the volunteering history of the user.
+        :return:
+        """
         volunteering_history = []
 
         if self.ui.add_item('volunteering'):
@@ -71,6 +108,10 @@ class ResumeCreate:
         return volunteering_history
 
     def get_education_info(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the education of the user.
+        :return:
+        """
         education_info = []
 
         while self.ui.add_item('education'):
@@ -93,6 +134,10 @@ class ResumeCreate:
         return education_info
 
     def get_awards(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the awards of the user.
+        :return:
+        """
         awards = []
 
         while self.ui.add_item('award'):
@@ -107,6 +152,10 @@ class ResumeCreate:
         return awards
 
     def get_publications(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the publications of the user/
+        :return:
+        """
         publications = []
 
         while self.ui.add_item('publication'):
@@ -122,6 +171,10 @@ class ResumeCreate:
         return publications
 
     def get_skills(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the skills of the user.
+        :return:
+        """
         skills = []
 
         while self.ui.add_item('skill'):
@@ -136,6 +189,10 @@ class ResumeCreate:
         return skills
 
     def get_languages(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the user languages.
+        :return:
+        """
         languages = []
 
         while self.ui.add_item('language'):
@@ -148,6 +205,10 @@ class ResumeCreate:
         return languages
 
     def get_interests(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the user interests.
+        :return:
+        """
         interests = []
 
         while self.ui.add_item('interest'):
@@ -161,18 +222,26 @@ class ResumeCreate:
         return interests
 
     def get_references(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the user references.
+        :return:
+        """
         references = []
 
         while self.ui.add_item('reference'):
-            name, reference = self.ui.get_reference()
+            reference = self.ui.get_reference()
             references.append({
-                'name': name,
-                'reference': reference
+                'name': reference['name'],
+                'reference': reference['reference'],
             })
 
         return references
 
     def get_projects(self) -> typing.List[typing.Dict]:
+        """
+        Adaptor method to get the user projects.
+        :return:
+        """
         projects = []
 
         while self.ui.add_item('project'):
@@ -198,8 +267,15 @@ class ResumeCreate:
         return projects
 
     def create(self, file_path: str, file_name: str = 'resume.json') -> None:
+        """
+        Get all the data from the user, create the json structure and save it.
+
+        :param file_path: the path to save the file at.
+        :param file_name: the name to save the file with.
+        :return: None
+        """
         # gathering all the data for the json file
-        country, region, city, address, postal_code = self.ui.get_location()
+        location = self.ui.get_location()
         full_name, profession, image, email, phone, url, summary = self.ui.get_basics()
         profiles = self.get_profiles()
         work_history = self.get_work_history()
@@ -224,13 +300,7 @@ class ResumeCreate:
                 "phone": f"{phone}",
                 "url": f"{url}",
                 "summary": f"{summary}",
-                "location": {
-                    "address": f"{address}",
-                    "postalCode": f"{postal_code}",
-                    "city": f"{city}",
-                    "countryCode": f"{country}",
-                    "region": f"{region}"
-                },
+                "location": location,
                 "profiles": profiles
             },
             "work": work_history,
@@ -251,5 +321,5 @@ class ResumeCreate:
         }
 
         # creating the file
-        with open(f'{file_path}/{file_name}', 'w') as f:
-            json.dump(template, f, indent=4)
+        with open(f'{file_path}/{file_name}', 'w') as file_to_write:
+            json.dump(template, file_to_write, indent=4)

@@ -7,6 +7,11 @@ from resume_json.json_resume import ResumeJson
 
 
 def parsing_arguments() -> argparse.Namespace:
+    """
+    This function is to parse the arguments coming from cmd.
+
+    :return: argparse.Namespace object with all the arguments from the command line
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument('-V', '--version')
     parser.add_argument('-t', '--theme', metavar='theme name', type=str,
@@ -48,6 +53,9 @@ def main():
         resume_json.export(file_path, args.resume, args.export, args.theme, args.format, args.language)
     elif args.serve:
         resume_json.serve(file_path, args.resume, args.language)
+    else:
+        # TODO: print help message
+        pass
 
 
 if __name__ == '__main__':
