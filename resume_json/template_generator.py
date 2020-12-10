@@ -41,8 +41,8 @@ class TemplateGenerator:
     def get_year_from_date(self, value: str) -> typing.Union[int, str]:
         """
         Filter to get the year from the date
-        :param value:
-        :return:
+        :param value: the date to get the year from in the format %Y-%m-%d
+        :return: the year as an int or string
         """
         try:
             date_value = dt.strptime(value, '%Y-%m-%d')
