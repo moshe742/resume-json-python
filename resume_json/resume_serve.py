@@ -2,7 +2,7 @@ import cherrypy
 import json
 import os
 
-from resume_json.template_generator import TemplateGenerator
+from .template_generator import TemplateGenerator
 
 
 class ServeJson:
