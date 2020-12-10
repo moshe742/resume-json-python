@@ -2,24 +2,36 @@ from datetime import datetime as dt
 import json
 import os
 import typing
+import sys
 
-from jinja2 import Environment, PackageLoader, select_autoescape
+from jinja2 import Environment, PackageLoader, FileSystemLoader, select_autoescape
 
 
 class TemplateGenerator:
-    def __init__(self):
-        self.env = Environment(
-            loader=PackageLoader('resume_json', 'templates'),
-            autoescape=select_autoescape(['html', 'xml'])
-        )
-        self.theme_name = {
-            'even': 'even',
-            'cora': 'cora',
-            'macchiato': 'macchiato',
-            'stackoverflow': 'stackoverflow',
-            'short': 'short',
-            'mine': 'mine',
-        }
+    def __init__(self, theme_dir):
+        if theme_dir:
+            self.env = Environment(
+                loader=FileSystemLoader(theme_dir),
+                autoescape=select_autoescape(['html', 'xml'])
+            )
+            self.theme_name = {}
+            for path in os.listdir(theme_dir):
+                if os.path.isfile(os.path.join(theme_dir, path)):
+                    name = os.path.basename(path).split('.')[0]
+                    self.theme_name[name] = name
+        else:
+            self.env = Environment(
+                loader=PackageLoader('resume_json', 'templates'),
+                autoescape=select_autoescape(['html', 'xml'])
+            )
+            self.theme_name = {
+                'even': 'even',
+                'cora': 'cora',
+                'macchiato': 'macchiato',
+                'stackoverflow': 'stackoverflow',
+                'short': 'short',
+                'mine': 'mine',
+            }
         self.theme = None
         self.env.filters['datetime_format'] = self.datetime_format
         self.env.filters['get_year'] = self.get_year_from_date

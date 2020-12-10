@@ -30,8 +30,8 @@ class ResumeJson:
         return validate.validate(file_validate, schema)
 
     def export(self, file_path: str, json_name: str = 'resume', file_name: str = 'resume',
-               theme: str = 'even', kind: str = 'html', language: str = 'en') -> None:
-        export = ResumeExport()
+               theme: str = 'even', kind: str = 'html', language: str = 'en', theme_dir: str = None) -> None:
+        export = ResumeExport(theme_dir)
 
         if kind == 'html':
             export.export_html(file_path, json_name, file_name, theme, language)
