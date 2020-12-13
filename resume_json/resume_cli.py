@@ -40,7 +40,7 @@ def main():
     args = parsing_arguments()
     file_path = args.dir
     resume_json = ResumeJson()
-    if not os.path.isdir(args.theme_dir):
+    if args.theme is not None and not os.path.isdir(args.theme_dir):
         print(f'The theme directory {args.theme_dir} is not a directory...')
         sys.exit(1)
 
