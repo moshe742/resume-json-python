@@ -40,11 +40,12 @@ def main():
     args = parsing_arguments()
     file_path = args.dir
     resume_json = ResumeJson()
-    if args.theme is not None and not os.path.isdir(args.theme_dir):
-        print(f'The theme directory {args.theme_dir} is not a directory...')
-        sys.exit(1)
-    elif len(os.listdir(args.theme_dir)) == 0:
-        print(f'Warning: {args.theme_dir} theme directory is empty.')
+    if args.theme_dir:
+        if not os.path.isdir(args.theme_dir):
+            print(f'The theme directory {args.theme_dir} is not a directory...')
+            sys.exit(1)
+        elif len(os.listdir(args.theme_dir)) == 0:
+            print(f'Warning: {args.theme_dir} theme directory is empty.')
 
     if args.init:
         resume_json.create(file_path, args.resume)
