@@ -43,6 +43,8 @@ def main():
     if args.theme is not None and not os.path.isdir(args.theme_dir):
         print(f'The theme directory {args.theme_dir} is not a directory...')
         sys.exit(1)
+    elif len(os.listdir(args.theme_dir)) == 0:
+        print(f'Warning: {args.theme_dir} theme directory is empty.')
 
     if args.init:
         resume_json.create(file_path, args.resume)
