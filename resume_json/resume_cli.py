@@ -31,7 +31,7 @@ def parsing_arguments() -> argparse.Namespace:
     parser.add_argument('-e', '--export', metavar='file name')
     parser.add_argument('-S', '--serve', action='store_true')
     parser.add_argument('-l', '--language', metavar='language code', default='en')
-    parser.add_argument('--theme-dir', metavar="path", default=None)
+    parser.add_argument('--theme-dir', metavar="path")
 
     return parser.parse_args()
 
