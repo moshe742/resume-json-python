@@ -4,7 +4,7 @@ import argparse
 import os
 import sys
 
-from .json_resume import ResumeJson
+from resume_json.json_resume import ResumeJson
 
 
 def parsing_arguments() -> argparse.Namespace:

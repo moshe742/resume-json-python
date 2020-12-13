@@ -1,6 +1,6 @@
 import cherrypy
 
-from .template_generator import TemplateGenerator
+from resume_json.template_generator import TemplateGenerator
 
 
 class ServeJson:
