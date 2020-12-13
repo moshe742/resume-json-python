@@ -87,7 +87,7 @@ class ResumeJson:
         elif kind == 'pdf':
             export.export_pdf(file_path, json_name, file_name, theme, language)
 
-    def serve(self, json_file_path: str, json_file: str, language: str = 'en') -> None:
+    def serve(self, json_file_path: str, json_file: str, language: str = 'en', theme_dir: str = None) -> None:
         """
         Method to enable serving the file on localhost through the browser
 
@@ -100,4 +100,4 @@ class ResumeJson:
         :return: None
         """
         server = ResumeServe()
-        server.serve(json_file_path, json_file, language)
+        server.serve(json_file_path, json_file, language, theme_dir)

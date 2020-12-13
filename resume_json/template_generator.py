@@ -11,7 +11,7 @@ class TemplateGenerator:
     """
     Class to create the HTML template
     """
-    def __init__(self, theme_dir):
+    def __init__(self, theme_dir=None):
         loaders = [PackageLoader('resume_json', 'templates')]
         if theme_dir:
             loaders.insert(0, FileSystemLoader(theme_dir))

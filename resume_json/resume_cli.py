@@ -61,7 +61,7 @@ def main():
     elif args.export:
         resume_json.export(file_path, args.resume, args.export, args.theme, args.format, args.language, args.theme_dir)
     elif args.serve:
-        resume_json.serve(file_path, args.resume, args.language)
+        resume_json.serve(file_path, args.resume, args.language, args.theme_dir)
     else:
         # TODO: print help message
         pass
