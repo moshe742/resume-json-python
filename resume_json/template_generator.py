@@ -78,7 +78,7 @@ class TemplateGenerator:
         }
         try:
             date_value = dt.strptime(value, '%Y-%m-%d')
-            return date_value.strftime(date_time_format[self.theme] if self.theme in date_time_format else "%Y-m-%d")
+            return date_value.strftime(date_time_format[self.theme] if self.theme in date_time_format else "%Y-%m-%d")
         except ValueError:
             pass
         except TypeError:
@@ -86,7 +86,7 @@ class TemplateGenerator:
 
         try:
             date_value = dt.strptime(value, '%Y-%m')
-            return date_value.strftime(date_time_format[self.theme] if self.theme in date_time_format else "%Y-m-%d")
+            return date_value.strftime(date_time_format[self.theme] if self.theme in date_time_format else "%Y-%m-%d")
         except ValueError:
             pass
 
