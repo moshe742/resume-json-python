@@ -78,6 +78,7 @@ class ResumeJson:
         'stackoverflow']
         :param kind: The type of file. Can be one of ['pdf', 'html'], defaults to html.
         :param language: The language of the file as a two letter code, defaults to en.
+        :param theme_dir: the path to theme directory to work with
         :return: None
         """
         export = ResumeExport(theme_dir)
@@ -97,6 +98,7 @@ class ResumeJson:
         :param json_file_path: the path to the resume.json
         :param json_file: the name of the json resume file with extension
         :param language: the language two letter code to use while serving the html
+        :param theme_dir: the path to theme directory to work with
         :return: None
         """
         server = ResumeServe()

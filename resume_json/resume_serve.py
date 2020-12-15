@@ -43,6 +43,7 @@ class ResumeServe:
         :param json_path: the path to the json to be served
         :param json_file: the json file name including extension
         :param language: the language of the json file
+        :param theme_dir: the path to theme directory to work with
         :return: None
         """
         cherrypy.quickstart(ServeJson(json_path, json_file, language, theme_dir))
