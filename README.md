@@ -84,6 +84,12 @@ you want to change it to one of the other themes you can do so with the flag -t 
 The themes implemented here are: cora, even, macchiato, short and stackoverflow and
 you should call them as written here.
 
+You can use your own themes if you want, just use the flag `--theme-dir` to give the
+system the path to your themes dir. Just remember to use your theme with the `-t`
+flag
+
+    $ ./resume-cli.py -e <file_name> -t my_awesome_theme --theme-dir /path/to/theme/dir # or relative path
+
 #### serving the file from a web server localy
 You can serve the json data from a web server localy to see how it looks like before
 you export it to html (pdf will look a bit different, so I recommend to check it by
@@ -96,8 +102,11 @@ Now you can see the result on your browser at the url http://localhost:8080/ and
 will show the default theme which is even.
 
 If you want to see another theme you can do so by going to the same url and add the
-query string ?theme=theme_name so to see the theme short for exampe you need to go to
+query string ?theme=theme_name so to see the theme short for example you need to go to
 http://localhost:8080/?theme=short
+
+As mentioned above, you can use the --theme-dir to serve your own theme here too.
+Just remember to append `?theme=your_theme_name` to the url
 
 ### language support
 The default language attribute for all of the html is english, if you want to change
