@@ -7,7 +7,7 @@ class ServeJson:
     """
     The class to work with cherrypy to serve the json
     """
-    def __init__(self, json_path, json_file, language='en'):
+    def __init__(self, json_path, json_file, language='en', theme_dir=None):
         """
         The initiation of the data needed to serve the json as html
         :param json_path: the path to the json resume
@@ -16,7 +16,7 @@ class ServeJson:
         """
         self.json_path = json_path
         self.json_file = json_file
-        self.template = TemplateGenerator()
+        self.template = TemplateGenerator(theme_dir)
         self.language = language
 
     @cherrypy.expose
@@ -36,7 +36,7 @@ class ResumeServe:
     def __init__(self):
         pass
 
-    def serve(self, json_path: str, json_file: str, language: str = 'en') -> None:
+    def serve(self, json_path: str, json_file: str, language: str = 'en', theme_dir: str = None) -> None:
         """
         Here I start the cherrypy to serve the resume json.
 
@@ -45,4 +45,4 @@ class ResumeServe:
         :param language: the language of the json file
         :return: None
         """
-        cherrypy.quickstart(ServeJson(json_path, json_file, language))
+        cherrypy.quickstart(ServeJson(json_path, json_file, language, theme_dir))

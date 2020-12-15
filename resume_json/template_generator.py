@@ -2,17 +2,22 @@ from datetime import datetime as dt
 import json
 import os
 import typing
+import sys
 
-from jinja2 import Environment, PackageLoader, select_autoescape
-
+from jinja2 import Environment, PackageLoader, FileSystemLoader, ChoiceLoader, select_autoescape
+from jinja2.exceptions import TemplateNotFound
 
 class TemplateGenerator:
     """
     Class to create the HTML template
     """
-    def __init__(self):
+    def __init__(self, theme_dir=None):
+        loaders = [PackageLoader('resume_json', 'templates')]
+        if theme_dir:
+            loaders.insert(0, FileSystemLoader(theme_dir))
+
         self.env = Environment(
-            loader=PackageLoader('resume_json', 'templates'),
+            loader=ChoiceLoader(loaders),
             autoescape=select_autoescape(['html', 'xml'])
         )
         self.theme_name = {
@@ -73,7 +78,7 @@ class TemplateGenerator:
         }
         try:
             date_value = dt.strptime(value, '%Y-%m-%d')
-            return date_value.strftime(date_time_format[self.theme])
+            return date_value.strftime(date_time_format[self.theme] if self.theme in date_time_format else "%Y-%m-%d")
         except ValueError:
             pass
         except TypeError:
@@ -81,7 +86,7 @@ class TemplateGenerator:
 
         try:
             date_value = dt.strptime(value, '%Y-%m')
-            return date_value.strftime(date_time_format[self.theme])
+            return date_value.strftime(date_time_format[self.theme] if self.theme in date_time_format else "%Y-%m-%d")
         except ValueError:
             pass
 
@@ -98,8 +103,12 @@ class TemplateGenerator:
         :param language: the language code of the json resume
         :return: the HTML as string
         """
-        self.theme = self.theme_name[theme_name]
-        template = self.env.get_template(f'{self.theme}.html')
+        self.theme = theme_name
+        try:
+            template = self.env.get_template(f'{self.theme}.html')
+        except TemplateNotFound:
+            print(f'Warning: {self.theme} template was not found, using default theme even.')
+            template = self.env.get_template('even.html')
         file_path_and_name = os.path.join(file_path, file_name)
         with open(file_path_and_name) as f:
             resume_dict = json.load(f)
