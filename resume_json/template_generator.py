@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime as dt
 import json
 import os
@@ -6,6 +7,8 @@ import sys
 
 from jinja2 import Environment, PackageLoader, FileSystemLoader, ChoiceLoader, select_autoescape
 from jinja2.exceptions import TemplateNotFound
+
+logger = logging.getLogger(__name__)
 
 
 class TemplateGenerator:
@@ -108,7 +111,7 @@ class TemplateGenerator:
         try:
             template = self.env.get_template(f'{self.theme}.html')
         except TemplateNotFound:
-            print(f'Warning: {self.theme} template was not found, using default theme even.')
+            logger.warning(f'Warning: {self.theme} template was not found, using default theme even.')
             template = self.env.get_template('even.html')
         file_path_and_name = os.path.join(file_path, file_name)
         with open(file_path_and_name) as f:

@@ -1,10 +1,18 @@
 #!/usr/bin/env python
 
 import argparse
+import logging
 import os
 import sys
 
 from resume_json.json_resume import ResumeJson
+
+logger = logging.getLogger(__name__)
+
+logger_stdout = logging.getLogger('stdout')
+logger_stdout.setLevel(logging.INFO)
+std_out_handler = logging.StreamHandler(sys.stdout)
+logger_stdout.addHandler(std_out_handler)
 
 
 def parsing_arguments() -> argparse.Namespace:
@@ -42,10 +50,10 @@ def main():
     resume_json = ResumeJson()
     if args.theme_dir:
         if not os.path.isdir(args.theme_dir):
-            print(f'The theme directory {args.theme_dir} is not a directory...')
+            logger.error(f'Error: The theme directory {args.theme_dir} is not a directory...')
             sys.exit(1)
         elif len(os.listdir(args.theme_dir)) == 0:
-            print(f'Warning: {args.theme_dir} theme directory is empty.')
+            logger.warning(f'Warning: {args.theme_dir} theme directory is empty.')
 
     if args.init:
         resume_json.create(file_path, args.resume)
@@ -53,11 +61,13 @@ def main():
         schema = args.schema
         result = resume_json.validate(args.validate, schema)
         if result is None:
-            print(f'Your resume-json is valid!')
+            sys.exit(0)
         else:
-            print(f'Your resume-json is not valid!')
-            print(f'The path to the errors on the json is (there could be more):')
-            print(f'Error: {result}')
+            # TODO: should be stdout
+            logger_stdout.info(f'Your resume-json is not valid!')
+            logger_stdout.info(f'The path to the errors on the json is (there could be more):')
+            logger_stdout.info(f'Error: {result}')
+            sys.exit(1)
     elif args.export:
         resume_json.export(file_path, args.resume, args.export, args.theme, args.format, args.language, args.theme_dir)
     elif args.serve:
@@ -68,4 +78,5 @@ def main():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(format='%(message)s')
     main()
