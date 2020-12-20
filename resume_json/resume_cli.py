@@ -5,7 +5,7 @@ import logging
 import os
 import sys
 
-from resume_json.json_resume import ResumeJson
+from .json_resume import ResumeJson
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +44,7 @@ def parsing_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main():
+def resume_cli():
     args = parsing_arguments()
     file_path = args.dir
     resume_json = ResumeJson()
@@ -77,6 +77,10 @@ def main():
         pass
 
 
-if __name__ == '__main__':
+def main():
     logging.basicConfig(format='%(message)s')
+    resume_cli()
+
+
+if __name__ == '__main__':
     main()

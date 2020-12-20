@@ -35,7 +35,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'resume_cli=resume_json.resume_cli:main',
+            'resume_cli=resume_json.__main__:main',
         ]
     },
     install_requires=['Jinja2', 'jsonschema', 'requests', 'WeasyPrint', 'cherrypy'],

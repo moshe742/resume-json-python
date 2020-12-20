@@ -2,7 +2,7 @@ import os
 
 from weasyprint import HTML
 
-from resume_json.template_generator import TemplateGenerator
+from .template_generator import TemplateGenerator
 
 
 class ResumeExport(TemplateGenerator):
