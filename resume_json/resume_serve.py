@@ -1,48 +1,45 @@
-import cherrypy
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from resume_json.template_generator import TemplateGenerator
 
 
-class ServeJson:
+class JsonResumeHandler(BaseHTTPRequestHandler):
+    """ Handler class for the rendered HTML.
+    
+    Serve GET HTTP requests with the rendered HTML as bytes.
     """
-    The class to work with cherrypy to serve the json
+    def do_GET(self):
+        """  """
+        self.send_response(200)
+        self.send_header('Content-type','text/html')
+        self.end_headers()
+        self.wfile.write(str.encode(self.server.html))
+
+class JsonResumeServer(HTTPServer):
+    """ Server class for the HTML render.
+    
+    Add a new attributes html to the class, which is passed down to the handler.
+
+    :param server_address: a `server_address https://docs.python.org/3/library/socketserver.html#socketserver.BaseServer.server_address`_
+    :param handler: a `RequestHandlerClass https://docs.python.org/3/library/socketserver.html#socketserver.BaseServer.RequestHandlerClass`_
+    :param html: the rendered HTML from the TemplateGenerator
     """
-    def __init__(self, json_path, json_file, language='en', theme_dir=None):
-        """
-        The initiation of the data needed to serve the json as html
-        :param json_path: the path to the json resume
-        :param json_file: the name including the extension of the resume json file
-        :param language: the language code of the resume
-        """
-        self.json_path = json_path
-        self.json_file = json_file
-        self.template = TemplateGenerator(theme_dir)
-        self.language = language
-
-    @cherrypy.expose
-    def index(self, theme: str = 'even') -> str:
-        """
-        The resume here is displayed with the theme selected
-
-        If one want to use another theme one can add ?theme=<theme_name> to the url
-        :param theme: the theme to use on the resume
-        :return: the HTML as a string
-        """
-        html = self.template.create_html(self.json_path, self.json_file, theme, self.language)
-        return html
+    def __init__(self, server_address, handler, html):
+        super().__init__(server_address, handler)
+        self.html = html
 
 
-class ResumeServe:
-    def __init__(self):
-        pass
+def serve_template(json_path, json_file, language, theme_name, theme_dir):
+    """ Serves the template, forever 
 
-    def serve(self, json_path: str, json_file: str, language: str = 'en', theme_dir: str = None) -> None:
-        """
-        Here I start the cherrypy to serve the resume json.
+    :param json_path: the path to the json to be served
+    :param json_file: the json file name including extension
+    :param language: the language of the json file
+    :param theme_name: the theme name used for the template generator
+    :param theme_dir: the user-defined theme directory
+    """
+    template = TemplateGenerator(theme_dir)
+    html = template.create_html(json_path, json_file, theme_name, language)
+    server = JsonResumeServer(('localhost', 8080), JsonResumeHandler, html)
+    server.serve_forever()
 
-        :param json_path: the path to the json to be served
-        :param json_file: the json file name including extension
-        :param language: the language of the json file
-        :return: None
-        """
-        cherrypy.quickstart(ServeJson(json_path, json_file, language, theme_dir))

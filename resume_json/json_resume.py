@@ -6,7 +6,7 @@ from . import basic_tui
 from .resume_init import ResumeCreate
 from .resume_validate import ResumeValidate
 from .resume_export import ResumeExport
-from .resume_serve import ResumeServe
+from .resume_serve import serve_template
 
 
 class ResumeJson:
@@ -99,5 +99,4 @@ class ResumeJson:
         :param language: the language two letter code to use while serving the html
         :return: None
         """
-        server = ResumeServe()
-        server.serve(json_file_path, json_file, language, theme_dir)
+        serve_template(json_file_path, json_file, language, "even", theme_dir)
