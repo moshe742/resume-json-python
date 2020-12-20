@@ -42,4 +42,4 @@ def serve_template(json_path, json_file, language, theme_name, theme_dir):
     html = template.create_html(json_path, json_file, theme_name, language)
     server = JsonResumeServer(('localhost', 8080), JsonResumeHandler, html)
     server.serve_forever()
-
+    

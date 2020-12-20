@@ -7,6 +7,7 @@ import sys
 from jinja2 import Environment, PackageLoader, FileSystemLoader, ChoiceLoader, select_autoescape
 from jinja2.exceptions import TemplateNotFound
 
+
 class TemplateGenerator:
     """
     Class to create the HTML template
