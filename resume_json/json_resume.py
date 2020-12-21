@@ -2,11 +2,11 @@ import json
 
 import requests
 
-from . import basic_tui
-from .resume_init import ResumeCreate
-from .resume_validate import ResumeValidate
-from .resume_export import ResumeExport
-from .resume_serve import ResumeServe
+from resume_json import basic_tui
+from resume_json.resume_init import ResumeCreate
+from resume_json.resume_validate import ResumeValidate
+from resume_json.resume_export import ResumeExport
+from resume_json.resume_serve import ResumeServe
 
 
 class ResumeJson:

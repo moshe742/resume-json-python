@@ -5,7 +5,7 @@ import logging
 import os
 import sys
 
-from .json_resume import ResumeJson
+from resume_json.json_resume import ResumeJson
 
 logger = logging.getLogger(__name__)
 
