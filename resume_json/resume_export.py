@@ -14,7 +14,7 @@ class ResumeExport(TemplateGenerator):
         """
         Export the json resume to pdf.
 
-        I export the resume to PDF format.
+        Export the resume to PDF format.
 
         :param file_path: the path to save the file at
         :param file_name: the name of the json file
@@ -32,7 +32,7 @@ class ResumeExport(TemplateGenerator):
         """
         Export the file to HTML
 
-        We create here the html version of the resume and save it to where the user specified.
+        Create the html version of the resume and save it to where the user specified.
         :param file_path: the path to save the html file
         :param file_name: the resume json file name to work with
         :param res_name: the result file name to create
