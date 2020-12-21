@@ -25,6 +25,10 @@ If you prefer to install it on your local machine just run the following command
 I assume you use docker for the explanations below, adjust as needed if you
 installed via pip.
 
+If you just downloaded the repository you can use the functionality with
+`python -m resume_json` from the root directory.
+
+#### usage through docker
 To use the command line tool you should use the option you want for
 what you want to do.
 
