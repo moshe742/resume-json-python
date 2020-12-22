@@ -13,6 +13,13 @@ def get_long_description():
         return fh.read()
 
 
+def get_requirements():
+    with open('requirements.txt') as f:
+        requirements = f.readlines()
+    requirements = [requirement.strip() for requirement in requirements]
+    return requirements
+
+
 LICENSE = get_license()
 
 long_description = get_long_description()
@@ -38,7 +45,7 @@ setup(
             'resume_cli=resume_json.__main__:main',
         ]
     },
-    install_requires=['Jinja2', 'jsonschema', 'requests', 'WeasyPrint', 'cherrypy'],
+    install_requires=get_requirements(),
     classifiers=[
         'Environment :: Console',
         'License :: OSI Approved :: MIT License',

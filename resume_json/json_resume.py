@@ -1,6 +1,9 @@
 import json
+import os
 
 import requests
+
+import click
 
 from resume_json import basic_tui
 from resume_json.resume_init import ResumeCreate
@@ -31,6 +34,9 @@ class ResumeJson:
         else:
             self.ui = ui
 
+    @click.command()
+    @click.option('-d', '--dir', default=os.getcwd())
+    @click.option('-r', '--resume')
     def create(self, file_path: str, file_name: str = 'resume.json') -> None:
         """
         Create the resume.json file.
@@ -42,6 +48,8 @@ class ResumeJson:
         resume_json = ResumeCreate(self.ui)
         resume_json.create(file_path, file_name)
 
+    @click.command()
+    @click.option('-v', '--validate', default=None)
     def validate(self, file_to_validate: str, schema: str = None) -> str:
         """
         Validates the correctness of the file according to the schema.
@@ -61,6 +69,14 @@ class ResumeJson:
         validate = ResumeValidate()
         return validate.validate(file_validate, schema)
 
+    @click.command()
+    @click.option('-d', '--dir', default=os.getcwd())
+    @click.option('-r', '--resume', default='resume.json') # json_name
+    @click.option('-e', '--export', default='resume') # file_name
+    @click.option('-t', '--theme', default='even') # theme
+    @click.option('-f', '--format', default='html') # format
+    @click.option('-l', '--language', default='en') # language
+    @click.option('--theme-dir', default=None) # theme dir
     def export(self, file_path: str, json_name: str = 'resume', file_name: str = 'resume',
                theme: str = 'even', kind: str = 'html', language: str = 'en', theme_dir: str = None) -> None:
         """
@@ -88,6 +104,11 @@ class ResumeJson:
         elif kind == 'pdf':
             export.export_pdf(file_path, json_name, file_name, theme, language)
 
+    @click.command()
+    @click.option('-d', '--dir', default=os.getcwd())
+    @click.option('-r', '--resume', default='resume.json')
+    @click.option('-l', '--language', default='en')
+    @click.option('--theme-dir', default=None)
     def serve(self, json_file_path: str, json_file: str, language: str = 'en', theme_dir: str = None) -> None:
         """
         Method to enable serving the file on localhost through the browser
