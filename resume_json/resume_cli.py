@@ -23,13 +23,6 @@ logger_stdout.addHandler(std_out_handler)
 
 @click.group()
 def resume_cli():
-    # resume_json = ResumeJson()
-    # if args.theme_dir:
-    #     if not os.path.isdir(args.theme_dir):
-    #         logger.error(f'Error: The theme directory {args.theme_dir} is not a directory...')
-    #         sys.exit(1)
-    #     elif len(os.listdir(args.theme_dir)) == 0:
-    #         logger.warning(f'Warning: {args.theme_dir} theme directory is empty.')
     pass
 
 
@@ -48,6 +41,7 @@ def create(directory: str, file_name: str = 'resume.json') -> None:
     resume_json = ResumeCreate(tui)
     resume_json.create(directory, file_name)
 
+
 @resume_cli.command()
 @click.option('-d', '--directory', default=os.getcwd())
 @click.option('-r', '--resume', default='resume.json')
@@ -64,8 +58,8 @@ def validate(directory: str, resume: str, schema: str = None) -> None:
     """
     file_validate = f'{directory}/{resume}'
 
-    validate = ResumeValidate()
-    result = validate.validate(file_validate, schema)
+    resume_validate = ResumeValidate()
+    result = resume_validate.validate(file_validate, schema)
     if result is None:
         sys.exit(0)
     else:
@@ -74,10 +68,11 @@ def validate(directory: str, resume: str, schema: str = None) -> None:
         logger_stdout.info(f'Error: {result}')
         sys.exit(1)
 
+
 @resume_cli.command()
 @click.option('-d', '--directory', 'file_path', default=os.getcwd())
 @click.option('-r', '--resume', 'json_name', default='resume.json')
-@click.option('-e', '--export', 'file_name', default='resume')
+@click.option('-e', '--file-name', 'file_name', default='resume')
 @click.option('-t', '--theme', default='even')
 @click.option('-f', '--format', 'kind', default='html')
 @click.option('-l', '--language', default='en')
@@ -102,12 +97,13 @@ def export(file_path: str, json_name: str = 'resume', file_name: str = 'resume',
     :param theme_dir: the path to theme directory to work with
     :return: None
     """
-    export = ResumeExport(theme_dir)
+    resume_export = ResumeExport(theme_dir)
 
     if kind == 'html':
-        export.export_html(file_path, json_name, file_name, theme, language)
+        resume_export.export_html(file_path, json_name, file_name, theme, language)
     elif kind == 'pdf':
-        export.export_pdf(file_path, json_name, file_name, theme, language)
+        resume_export.export_pdf(file_path, json_name, file_name, theme, language)
+
 
 @resume_cli.command()
 @click.option('-d', '--directory', 'json_file_path', default=os.getcwd())

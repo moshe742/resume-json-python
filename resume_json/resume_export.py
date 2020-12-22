@@ -42,5 +42,6 @@ class ResumeExport(TemplateGenerator):
         """
         html_data = self.create_html(file_path, file_name, theme_name, language)
         file_path = os.path.join(file_path, res_name)
+        print(file_path)
         with open(f'{file_path}.html', 'w') as f:
             f.write(html_data)

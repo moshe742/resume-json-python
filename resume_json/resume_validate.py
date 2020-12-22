@@ -7,7 +7,6 @@ import requests
 
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 
 class ResumeValidate:
@@ -26,15 +25,16 @@ class ResumeValidate:
         with open(f'{file_to_validate}') as f:
             file_validate = json.load(f)
         if schema is None:
+            logger.info('Info: schema was not provided, check from file')
             schema_url = file_validate['$schema']
             res = requests.get(schema_url)
             schema = json.loads(res.text)
         try:
-            res = jsonschema.validate(file_to_validate, schema)
+            logger.info('Info: validating file')
+            res = jsonschema.validate(file_validate, schema)
             return res
         except jsonschema.exceptions.ValidationError as ex:
             validation_error = []
-            logger.error(ex.message)
             for item in ex.path:
                 validation_error.append(str(item))
         return '.'.join(validation_error)
