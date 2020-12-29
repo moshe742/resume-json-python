@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from weasyprint import HTML
 
@@ -24,8 +25,9 @@ class ResumeExport(TemplateGenerator):
         :param language: the language code of the resume
         :return: None
         """
-        html_string = self.create_html(file_path, file_name, theme_name, language)
-        pdf_file = os.path.join(export_dir, res_name)
+        resume_path_and_name = Path(file_path, file_name)
+        html_string = self.create_html(resume_path_and_name, theme_name, language)
+        pdf_file = Path(export_dir, res_name)
         HTML(string=html_string).write_pdf(f'{pdf_file}.pdf')
 
     def export_html(self, file_path: str, file_name: str, export_dir: str, res_name: str, theme_name: str,
@@ -42,8 +44,9 @@ class ResumeExport(TemplateGenerator):
         :param language: the language code of the resume
         :return: None
         """
-        html_data = self.create_html(file_path, file_name, theme_name, language)
-        file_path = os.path.join(export_dir, res_name)
+        resume_path_and_name = Path(file_path, file_name)
+        html_data = self.create_html(resume_path_and_name, theme_name, language)
+        file_path = Path(export_dir, res_name)
 
         with open(f'{file_path}.html', 'w') as f:
             f.write(html_data)

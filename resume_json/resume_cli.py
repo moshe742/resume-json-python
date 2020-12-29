@@ -57,10 +57,8 @@ def validate(ctx: click.core.Context, schema: str = None) -> None:
     the resume.json file
     :return: string of the error in the file or None if the file is valid
     """
-    file_validate = f'{ctx.obj["directory"]}/{ctx.obj["resume_file_name"]}'
-
     resume_validate = ResumeValidate()
-    result = resume_validate.validate(file_validate, schema)
+    result = resume_validate.validate(ctx.obj['directory'], ctx.obj['resume_file_name'], schema)
     if result is None:
         sys.exit(0)
     else:

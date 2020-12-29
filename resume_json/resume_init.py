@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 import typing
 
 
@@ -321,5 +322,6 @@ class ResumeCreate:
         }
 
         # creating the file
-        with open(f'{file_path}/{file_name}', 'w') as file_to_write:
+        path = Path(file_path, file_name)
+        with open(path, 'w') as file_to_write:
             json.dump(template, file_to_write, indent=4)

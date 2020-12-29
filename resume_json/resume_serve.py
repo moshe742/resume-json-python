@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import cherrypy
 
 from resume_json.template_generator import TemplateGenerator
@@ -7,15 +9,13 @@ class ServeJson:
     """
     The class to work with cherrypy to serve the json
     """
-    def __init__(self, json_path, json_file, language='en', theme_dir=None):
+    def __init__(self, json_path_and_name: Path, language: str = 'en', theme_dir: str = None):
         """
         The initiation of the data needed to serve the json as html
-        :param json_path: the path to the json resume
-        :param json_file: the name including the extension of the resume json file
+        :param json_path_and_name: the path to the json resume
         :param language: the language code of the resume
         """
-        self.json_path = json_path
-        self.json_file = json_file
+        self.json_path_and_name = json_path_and_name
         self.template = TemplateGenerator(theme_dir)
         self.language = language
 
@@ -28,7 +28,7 @@ class ServeJson:
         :param theme: the theme to use on the resume
         :return: the HTML as a string
         """
-        html = self.template.create_html(self.json_path, self.json_file, theme, self.language)
+        html = self.template.create_html(self.json_path_and_name, theme, self.language)
         return html
 
 
@@ -46,4 +46,5 @@ class ResumeServe:
         :param theme_dir: the path to theme directory to work with
         :return: None
         """
-        cherrypy.quickstart(ServeJson(json_path, json_file, language, theme_dir))
+        json_path_and_name = Path(json_path, json_file)
+        cherrypy.quickstart(ServeJson(json_path_and_name, language, theme_dir))

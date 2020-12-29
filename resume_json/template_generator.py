@@ -1,9 +1,8 @@
 import logging
 from datetime import datetime as dt
 import json
-import os
+from pathlib import Path
 import typing
-import sys
 
 from jinja2 import Environment, PackageLoader, FileSystemLoader, ChoiceLoader, select_autoescape
 from jinja2.exceptions import TemplateNotFound
@@ -18,20 +17,14 @@ class TemplateGenerator:
     def __init__(self, theme_dir=None):
         loaders = [PackageLoader('resume_json', 'templates')]
         if theme_dir:
+            theme_dir = Path(theme_dir)
             loaders.insert(0, FileSystemLoader(theme_dir))
 
         self.env = Environment(
             loader=ChoiceLoader(loaders),
             autoescape=select_autoescape(['html', 'xml'])
         )
-        self.theme_name = {
-            'even': 'even',
-            'cora': 'cora',
-            'macchiato': 'macchiato',
-            'stackoverflow': 'stackoverflow',
-            'short': 'short',
-            'mine': 'mine',
-        }
+
         self.theme = None
         self.env.filters['datetime_format'] = self.datetime_format
         self.env.filters['get_year'] = self.get_year_from_date
@@ -96,13 +89,12 @@ class TemplateGenerator:
 
         return value
 
-    def create_html(self, file_path: str, file_name: str, theme_name: str,
+    def create_html(self, resume_path_obj: Path, theme_name: str,
                     language: str = 'en') -> str:
         """
         Creating the HTML according to the theme selected
 
-        :param file_path: the path to the json file
-        :param file_name: the name of the json file including extension
+        :param resume_path_obj: the path object of the path and resume to work with
         :param theme_name: the name of the theme
         :param language: the language code of the json resume
         :return: the HTML as string
@@ -113,7 +105,6 @@ class TemplateGenerator:
         except TemplateNotFound:
             logger.warning(f'Warning: {self.theme} template was not found, using default theme even.')
             template = self.env.get_template('even.html')
-        file_path_and_name = os.path.join(file_path, file_name)
-        with open(file_path_and_name) as f:
+        with open(resume_path_obj) as f:
             resume_dict = json.load(f)
         return template.render(resume=resume_dict, lang=language)

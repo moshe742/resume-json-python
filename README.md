@@ -132,7 +132,7 @@ As mentioned above, you can use the --theme-dir to serve your own theme here too
 Just remember to append `?theme=your_theme_name` to the url
 
 ### language support
-The default language attribute for all of the html is english, if you want to change
+The default language attribute for the html is english, if you want to change
 it you can do so with the -l or --language flag and the language code like so
 
     $ ./resume-cli.py ... -l he ... # for Hebrew
