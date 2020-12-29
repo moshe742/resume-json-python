@@ -83,12 +83,17 @@ export subcommand, it will default to html file and will create it on the workin
 directory
 
     $ ./resume-cli.py export
-If you want it created on another directory you can use -d/--dir
+If you want to use resume.json from another directory than the current working directory
+you can use -d/--dir
 
     $ ./resume-cli.py -d </path/to/dir> export
 To control the name of the exported file use -e or --file-name
 
     $ ./resume-cli.py export -e my_awesome_resume.json
+To export the file to a different directory from the current working directory you can
+use the following command
+
+    $ ./resume-cli.py export --export-dir /path/to/export/to/
 To export the file to pdf you need to use the flag -f or --format like so
 
     $ ./resume-cli.py export -f pdf
