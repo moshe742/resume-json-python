@@ -22,41 +22,42 @@ logger_stdout.addHandler(std_out_handler)
 
 
 @click.group()
-def resume_cli():
-    pass
+@click.option('-r', '--resume', 'resume_file_name', default='resume.json')
+@click.option('-d', '--dir', 'directory', default=os.getcwd())
+@click.pass_context
+def resume_cli(ctx, resume_file_name, directory):
+    ctx.ensure_object(dict)
+    ctx.obj['resume_file_name'] = resume_file_name
+    ctx.obj['directory'] = directory
 
 
 @resume_cli.command('init')
-@click.option('-d', '--directory', default=os.getcwd())
-@click.option('-r', '--resume', 'file_name', default='resume.json')
-def create(directory: str, file_name: str = 'resume.json') -> None:
+@click.pass_context
+def create(ctx: click.core.Context) -> None:
     """
     Create the resume.json file.
 
-    :param directory: the full path (not including the file name and extension) to the file
-    :param file_name: the file name to be created
+    :param ctx: the Context object from click to pass the parent command parameters
     :return: None
     """
     tui = basic_tui.BasicTui()
     resume_json = ResumeCreate(tui)
-    resume_json.create(directory, file_name)
+    resume_json.create(ctx.obj['directory'], ctx.obj['resume_file_name'])
 
 
 @resume_cli.command()
-@click.option('-d', '--directory', default=os.getcwd())
-@click.option('-r', '--resume', default='resume.json')
 @click.option('--schema', default=None)
-def validate(directory: str, resume: str, schema: str = None) -> None:
+@click.pass_context
+def validate(ctx: click.core.Context, schema: str = None) -> None:
     """
     Validates the correctness of the file according to the schema.
 
-    :param directory: the path to the file
-    :param resume: the full path and file name to the file one want to validate
+    :param ctx: the Context object from click to pass the parent command parameters
     :param schema: the schema to validate against, if not provided, will be taken from
     the resume.json file
     :return: string of the error in the file or None if the file is valid
     """
-    file_validate = f'{directory}/{resume}'
+    file_validate = f'{ctx.obj["directory"]}/{ctx.obj["resume_file_name"]}'
 
     resume_validate = ResumeValidate()
     result = resume_validate.validate(file_validate, schema)
@@ -70,15 +71,14 @@ def validate(directory: str, resume: str, schema: str = None) -> None:
 
 
 @resume_cli.command()
-@click.option('-d', '--directory', 'file_path', default=os.getcwd())
-@click.option('-r', '--resume', 'json_name', default='resume.json')
 @click.option('-e', '--file-name', 'file_name', default='resume')
 @click.option('-t', '--theme', default='even')
 @click.option('-f', '--format', 'kind', default='html')
 @click.option('-l', '--language', default='en')
 @click.option('--theme-dir', default=None)
-def export(file_path: str, json_name: str = 'resume', file_name: str = 'resume',
-           theme: str = 'even', kind: str = 'html', language: str = 'en', theme_dir: str = None) -> None:
+@click.pass_context
+def export(ctx: click.core.Context, file_name: str = 'resume', theme: str = 'even', kind: str = 'html', language: str = 'en',
+           theme_dir: str = None) -> None:
     """
     Export the file to other formats
 
@@ -86,9 +86,7 @@ def export(file_path: str, json_name: str = 'resume', file_name: str = 'resume',
     the file name to be resume.json, the theme to be `even` and the language to be English.
     One can change all those defaults by providing the relevant parameters.
 
-    :param file_path: the file path where the json will be found, defaults to the working
-    directory
-    :param json_name: the name of the resume.json file one want to work on, defaults to resume
+    :param ctx: the Context object from click to pass the parent command parameters
     :param file_name: the name of the exported file, defaults to resume
     :param theme: the theme one want the file to be in. can be one of ['even', 'cora', 'macchiato', 'short',
     'stackoverflow']
@@ -100,31 +98,29 @@ def export(file_path: str, json_name: str = 'resume', file_name: str = 'resume',
     resume_export = ResumeExport(theme_dir)
 
     if kind == 'html':
-        resume_export.export_html(file_path, json_name, file_name, theme, language)
+        resume_export.export_html(ctx.obj['directory'], ctx.obj['resume_file_name'], file_name, theme, language)
     elif kind == 'pdf':
-        resume_export.export_pdf(file_path, json_name, file_name, theme, language)
+        resume_export.export_pdf(ctx.obj['directory'], ctx.obj['resume_file_name'], file_name, theme, language)
 
 
 @resume_cli.command()
-@click.option('-d', '--directory', 'json_file_path', default=os.getcwd())
-@click.option('-r', '--resume', 'json_file', default='resume.json')
 @click.option('-l', '--language', default='en')
 @click.option('--theme-dir', default=None)
-def serve(json_file_path: str, json_file: str, language: str = 'en', theme_dir: str = None) -> None:
+@click.pass_context
+def serve(ctx: click.core.Context, language: str = 'en', theme_dir: str = None) -> None:
     """
     Method to enable serving the file on localhost through the browser
 
     This method will create a cherrypy server on the local machine to serve the
     ones json resume and enable one to see their resume on the browser
 
-    :param json_file_path: the path to the resume.json
-    :param json_file: the name of the json resume file with extension
+    :param ctx: the Context object from click to pass the parent command parameters
     :param language: the language two letter code to use while serving the html
     :param theme_dir: the path to theme directory to work with
     :return: None
     """
     server = ResumeServe()
-    server.serve(json_file_path, json_file, language, theme_dir)
+    server.serve(ctx.obj['directory'], ctx.obj['resume_file_name'], language, theme_dir)
 
 
 def main():
