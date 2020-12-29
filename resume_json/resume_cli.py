@@ -76,9 +76,10 @@ def validate(ctx: click.core.Context, schema: str = None) -> None:
 @click.option('-f', '--format', 'kind', default='html')
 @click.option('-l', '--language', default='en')
 @click.option('--theme-dir', default=None)
+@click.option('--export-dir', 'export_dir', default=os.getcwd())
 @click.pass_context
 def export(ctx: click.core.Context, file_name: str = 'resume', theme: str = 'even', kind: str = 'html', language: str = 'en',
-           theme_dir: str = None) -> None:
+           theme_dir: str = None, export_dir: str = None) -> None:
     """
     Export the file to other formats
 
@@ -93,14 +94,15 @@ def export(ctx: click.core.Context, file_name: str = 'resume', theme: str = 'eve
     :param kind: The type of file. Can be one of ['pdf', 'html'], defaults to html.
     :param language: The language of the file as a two letter code, defaults to en.
     :param theme_dir: the path to theme directory to work with
+    :param export_dir: the directory to create the exported file at
     :return: None
     """
     resume_export = ResumeExport(theme_dir)
 
     if kind == 'html':
-        resume_export.export_html(ctx.obj['directory'], ctx.obj['resume_file_name'], file_name, theme, language)
+        resume_export.export_html(ctx.obj['directory'], ctx.obj['resume_file_name'], export_dir, file_name, theme, language)
     elif kind == 'pdf':
-        resume_export.export_pdf(ctx.obj['directory'], ctx.obj['resume_file_name'], file_name, theme, language)
+        resume_export.export_pdf(ctx.obj['directory'], ctx.obj['resume_file_name'], export_dir, file_name, theme, language)
 
 
 @resume_cli.command()
