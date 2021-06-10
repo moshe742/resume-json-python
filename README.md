@@ -13,7 +13,7 @@ Once You can use docker run this command to build
     $ docker build -t image_name .
 And then
 
-    $ docker run -it image_name bash
+    $ docker run --rm -it image_name bash
 You will be prompted with the command line from inside the docker and you can go from
 here to usage and start using resume-cli.
 
